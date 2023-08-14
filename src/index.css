@@ -9,5 +9,9 @@ body {
  color: var(--main-color) !important;
  font-family: 'Montserrat Alternates', sans-serif !important;
 }
-
+ 
+input{
+  background-color: transparent !important;
+  color: var(--main-color) !important;
+}
 
