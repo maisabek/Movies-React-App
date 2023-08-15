@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/fontawesome.css'
 import './index.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
-
+import 'jquery/dist/jquery.min.js'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

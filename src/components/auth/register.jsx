@@ -1,50 +1,76 @@
 import  Axios  from 'axios';
+import Joi from 'joi';
 import React, { useState } from 'react'
 
 export default function Register() {
    const [error,setError] =useState('')
+   let [errorList,setErrorList] =useState([])
    const [user,setUser]=useState({
-    first_name:'',
-    last_name:'',
-    age:'',
+    firstName:'',
+    lastName:'',
+    username:'',
+    mobile:'',
     email:'',
     password:''
    })
+
+  function validateRegisterForm(){
+   let schema =Joi.object({
+    firstName:Joi.string().required(),
+    lastName:Joi.string().required(),
+    username:Joi.string().required(),
+    mobile:Joi.number().required(),
+    email:Joi.string().email({ minDomainSegments: 2, tlds:{allow:['com','net']}}).required(),
+    password:Joi.string().pattern(new RegExp('^[a-z][A-Z]{1,9}$')).required()
+   })
+   return schema.validate(user,{ abortEarly: false })
+  }
    
    function getUserData(e){
-    let myUser={...user} // copy user
+    let myUser={...user} 
     myUser[e.target.name]=e.target.value;
     setUser(myUser)
    }
 
    async function submitRegisterForm(e){
-    // refresh form اللى الايفنت دة بيعملة اللى هو هنا ال behavior يمنع ال 
-    e.preventDefault() 
-   let response = await Axios.post(`https://64d8effe5f9bf5b879ceb829.mockapi.io/signup`,user)
-    console.log(response.status);
-    if(response.status){
-
+    e.preventDefault()
+    let ValidationResult = validateRegisterForm()
+    console.log(ValidationResult);
+    if(ValidationResult.error){
+      setErrorList(ValidationResult.error.details)
     }else{
-      setError('Error')
+      let response = await Axios.post(`http://209.126.85.136/tableers/api/Auth/Register`,user)
+      console.log(response.status);
+      if(response.status){
+  
+      }else{
+        setError('Error')
+      }
     }
+  
    }
 
   return (
     <>
-      <div className='w-75 mx-auto'>
+      <div className='w-75 mx-auto mt-5 my-5'>
         {error.length > 0 ?<div className='alert alert-danger'>{error}</div> :''}  
+        {errorList ? errorList.map((error,index)=><div className='alert alert-danger' key={index}>{error.message}</div> ):''}
         <h5 className='mt-5'>Register Now</h5>
         <form onSubmit={submitRegisterForm}>
-          <label htmlFor="first_name">First Name : </label>
-          <input type="text" id='first_name' name='first_name'
+          <label htmlFor="firstName">First Name : </label>
+          <input type="text" id='firstName' name='firstName'
             className='form-control mb-3' onChange={getUserData}/>
 
-          <label htmlFor="last_name">Last Name : </label>
-          <input type="text" id='last_name' name='last_name'
+          <label htmlFor="lastName">Last Name : </label>
+          <input type="text" id='lastName' name='lastName'
             className='form-control mb-3' onChange={getUserData}/>
 
-          <label htmlFor="age">Age : </label>
-          <input type="number" id='age' name='age'
+          <label htmlFor="username">username : </label>
+          <input type="text" id='username' name='username'
+            className='form-control mb-3' onChange={getUserData}/>
+
+           <label htmlFor="mobile">mobile : </label>
+          <input type="number" id='mobile' name='mobile'
             className='form-control mb-3' onChange={getUserData}/>
 
           <label htmlFor="email">Email : </label>

@@ -2,6 +2,7 @@
 :root{
   --bg-main: #131722;
   --main-color:#fff;
+  --border-color:#a8a8a83d;
 }
 
 body {
@@ -15,3 +16,12 @@ input{
   color: var(--main-color) !important;
 }
 
+.line{
+  height: 1px;
+  background-color: var(--border-color);
+}
+a{
+text-decoration: none !important;
+color: var(--main-color) !important;
+cursor: pointer;
+}
