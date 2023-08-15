@@ -2,7 +2,6 @@ import Axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import avater from '../assets/images/avatar-profile.jpg'
 import { Link } from 'react-router-dom'
-import $ from 'jquery' 
 
 export default function Home() {
   const [trendingMovies, setTrendingMovies] = useState([])
@@ -61,12 +60,12 @@ export default function Home() {
         {
           trendingTV.map((data, index) =>
             <div className='col-md-2' key={index}>
-              <div className="movie">
+              <Link className="movie" to={'/tv/'+data.id}>
                 <img src={'https://image.tmdb.org/t/p/w500/' + data.poster_path} className='w-100' />
                 <h3 className='h6 my-2'>
                   {data.name}
                 </h3>
-              </div>
+              </Link>
             </div>
           )
         }

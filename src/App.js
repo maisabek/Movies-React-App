@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import jwtDecode from 'jwt-decode';
 import Tv from './components/TV/tv';
 import People from './components/people/people';
+import TvDetails from './components/TV/TvDetails';
 
 function App() {
   let [UserData,setUserData]=useState({})
@@ -37,8 +38,9 @@ function App() {
           <Route path='movies' element={<MoviesList />}/>
           <Route path='moviesDetails/:id' element={<MovieDetails />}/>
           <Route path='tv' element={<Tv />}/>
+          <Route path='tv/:id' element={<TvDetails />}/>
           <Route path='people' element={<People />}/>
-
+        
           <Route path='login' element={<Login GetUserData={GetUserData}/>}/>
           <Route path='Register' element={<Register />}/>
 

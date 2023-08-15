@@ -47,7 +47,6 @@ export default function Register() {
         setError('Error')
       }
     }
-  
    }
 
   return (
