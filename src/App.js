@@ -3,7 +3,7 @@ import Navbar from './layouts/navbar';
 import Footer from './layouts/footer';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import MoviesList from './components/Movies/Movies-list';
-import Home from './components/home';
+import Home from './components/home/home';
 import Login from './components/auth/login';
 import Register from './components/auth/register';
 import MovieDetails from './components/Movies/MovieDetails';
@@ -12,6 +12,7 @@ import jwtDecode from 'jwt-decode';
 import Tv from './components/TV/tv';
 import People from './components/people/people';
 import TvDetails from './components/TV/TvDetails';
+import PeopleDetails from './components/people/PeopleDetails';
 
 function App() {
   let [UserData,setUserData]=useState({})
@@ -40,7 +41,9 @@ function App() {
           <Route path='tv' element={<Tv />}/>
           <Route path='tv/:id' element={<TvDetails />}/>
           <Route path='people' element={<People />}/>
-        
+
+          <Route path='people/:id' element={<PeopleDetails />}/>
+
           <Route path='login' element={<Login GetUserData={GetUserData}/>}/>
           <Route path='Register' element={<Register />}/>
 

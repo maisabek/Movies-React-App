@@ -2,6 +2,7 @@ import Axios from "axios";
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import Joi from 'joi';
+import logo from '../../assets/images/logo.webp'
 
 export default function Login(props) {
   let [user, setUser] = useState({
@@ -23,7 +24,7 @@ export default function Login(props) {
   function validateLoginForm() {
     let schema = Joi.object({
       email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
-      password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required()
+      password: Joi.string().required()
     })
     return schema.validate(user, { abortEarly: false })
   }
@@ -32,12 +33,12 @@ export default function Login(props) {
     setLoading(true)
     let ValidationResult = validateLoginForm()
     console.log(ValidationResult);
-    if(ValidationResult.error){
+    if (ValidationResult.error) {
       setErrorList(ValidationResult.error.details)
       setLoading(false)
     } else {
       let response = await Axios.post(`http://209.126.85.136/tableers/api/Auth/Login`, user)
-      console.log("response = ",response);
+      console.log("response = ", response);
 
       if (response.status) {
         // localStorage.setItem("token", response.token)
@@ -52,36 +53,39 @@ export default function Login(props) {
   }
 
   useEffect(() => {
-   if(localStorage.getItem('token')){
-    navigate('/home')
-   }
+    if (localStorage.getItem('token')) {
+      navigate('/home')
+    }
   }, [])
   return (
     <>
-    <div  className="mx-auto w-75 mt-5 py-5">
-      {ApiError ? <div className="alert alert-danger">{ApiError}</div> : ''}
-      {ErrorList ? ErrorList.map((error, index) =>
-        <div className="alert alert-danger" key={index}>{error.message}</div>) : ''
-      }
-
-      <form onSubmit={submitLoginForm}>
-        <div className="form-group">
-          <label htmlFor="email">Email</label>
-          <input type="email" name="email" id="email" className="form-control mb-3"
-            onChange={getUserData} />
+      <div className="mx-auto w-50 mt-5 py-5">
+        {ApiError ? <div className="alert alert-danger">{ApiError}</div> : ''}
+        {ErrorList ? ErrorList.map((error, index) =>
+          <div className="alert alert-danger" key={index}>{error.message}</div>) : ''
+        }
+        <div className="col-md-12 mb-3 d-flex justify-content-center">
+          <img src={logo} className='w-25' />
         </div>
+        <form onSubmit={submitLoginForm} className="row">
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input type="email" name="email" id="email" className="form-control mb-3"
+              onChange={getUserData} />
+          </div>
 
-        <div className="form-group mb-3">
-          <label htmlFor="password">Password</label>
-          <input type="password" id="password" name="password" className="form-control"
-            onChange={getUserData} />
-        </div>
-
-        <button type="submit" className="btn btn-outline-info">
-          Login
-          {loading ? <i className="fa-solid fa-spinner fa-spin"></i> : ''}
-        </button>
-      </form>
+          <div className="form-group mb-3">
+            <label htmlFor="password">Password</label>
+            <input type="password" id="password" name="password" className="form-control"
+              onChange={getUserData} />
+          </div>
+          <div className="d-flex justify-content-end mt-2">
+          <button type="submit" className="btn btn-outline-info">
+            Login
+            {loading ? <i className="fa-solid fa-spinner fa-spin"></i> : ''}
+          </button>
+          </div>
+        </form>
       </div>
     </>
   )

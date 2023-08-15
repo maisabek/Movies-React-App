@@ -1,7 +1,8 @@
 import Axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import avater from '../assets/images/avatar-profile.jpg'
 import { Link } from 'react-router-dom'
+import style from './home.module.css'
+import avater from '../../assets/images/avatar-profile.jpg'
 
 export default function Home() {
   const [trendingMovies, setTrendingMovies] = useState([])
@@ -86,14 +87,19 @@ export default function Home() {
         {
           trendingPerson.map((data, index) =>
             <div className='col-md-2' key={index}>
-              <div className="movie">
-                {data.profile_path == null ? <img className='w-100' src={avater}/> :
-                <img src={'https://image.tmdb.org/t/p/w500/' + data.profile_path} className='w-100' />
+              <Link className="movie" to={"/people/"+data.id}>
+              <div className={style.imageHeight}>
+                {
+                data.profile_path == null ? 
+                <img className='w-100 h-100' src={avater}/> :
+                <img src={'https://image.tmdb.org/t/p/w500/' + data.profile_path} 
+                className='w-100 h-100' />
                 }
-                <h3 className='h6 my-2'>
+                </div>
+                <h3 className='h6'>
                   {data.name}
                 </h3>
-              </div>
+              </Link>
             </div>
           )
         }
