@@ -1,24 +1,11 @@
-import Axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import style from './home.module.css'
 import avater from '../../assets/images/avatar-profile.jpg'
+import { movieContext } from '../../store/store'
 
 export default function Home() {
-  const [trendingMovies, setTrendingMovies] = useState([])
-  const [trendingTV, setTrendingTV] = useState([])
-  const [trendingPerson, setTrendingPerson] = useState([])
-
-  async function getTranding(MediaType, callback, pageNumber) {
-    let { data } = await Axios.get(`https://api.themoviedb.org/3/trending/${MediaType}/day?api_key=a631b24dc97d4274715c5fa6b5a60321&page=${pageNumber}`)
-    callback(data.results.slice(0,10))
-  }
-
-  useEffect(() => {
-    getTranding('movie', setTrendingMovies, 1)
-    getTranding('tv', setTrendingTV, 1)
-    getTranding('person', setTrendingPerson, 1)
-  }, [])
+let {trendingMovies,trendingTV,trendingPerson} =useContext(movieContext)
   return (
     <>
       <div className="row py-5">

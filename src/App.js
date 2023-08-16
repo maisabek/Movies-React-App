@@ -13,44 +13,47 @@ import Tv from './components/TV/tv';
 import People from './components/people/people';
 import TvDetails from './components/TV/TvDetails';
 import PeopleDetails from './components/people/PeopleDetails';
+import MoviesContextProvider from './store/store';
 
 function App() {
-  let [UserData,setUserData]=useState({})
-  let navigate=useNavigate()
-  function GetUserData(){
-    let token =localStorage.getItem('token')
+  let [UserData, setUserData] = useState({})
+  let navigate = useNavigate()
+  function GetUserData() {
+    let token = localStorage.getItem('token')
     let decodedToken = jwtDecode(token)
     setUserData(decodedToken)
   }
 
-  useEffect(()=>{
-    if(localStorage.getItem('token')){
-     navigate('/home')
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      navigate('/home')
     }
-  },[])
-  
+  }, [])
+
   return (
-    <div>
-      <Navbar userData={UserData}/>
-       <div  className="container">
-         <Routes>
-          <Route path='' element={<Home />}/>
-          <Route path='home' element={<Home />}/>
-          <Route path='movies' element={<MoviesList />}/>
-          <Route path='moviesDetails/:id' element={<MovieDetails />}/>
-          <Route path='tv' element={<Tv />}/>
-          <Route path='tv/:id' element={<TvDetails />}/>
-          <Route path='people' element={<People />}/>
+    <>
+        <Navbar userData={UserData} />
+        <div className="container">
+        <MoviesContextProvider>
+          <Routes>
+            <Route path='' element={<Home />} />
+            <Route path='home' element={<Home />} />
+            <Route path='movies' element={<MoviesList />} />
+            <Route path='moviesDetails/:id' element={<MovieDetails />} />
+            <Route path='tv' element={<Tv />} />
+            <Route path='tv/:id' element={<TvDetails />} />
+            <Route path='people' element={<People />} />
 
-          <Route path='people/:id' element={<PeopleDetails />}/>
+            <Route path='people/:id' element={<PeopleDetails />} />
 
-          <Route path='login' element={<Login GetUserData={GetUserData}/>}/>
-          <Route path='Register' element={<Register />}/>
+            <Route path='login' element={<Login GetUserData={GetUserData} />} />
+            <Route path='Register' element={<Register />} />
 
-         </Routes>
-       </div>
-      <Footer />
-    </div>
+          </Routes>
+          </MoviesContextProvider>
+        </div>
+        <Footer />
+    </>
   );
 }
 
