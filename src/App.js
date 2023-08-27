@@ -23,6 +23,11 @@ function App() {
     let decodedToken = jwtDecode(token)
     setUserData(decodedToken)
   }
+  function LogOut() {
+    setUserData(null)
+    localStorage.removeItem('token')
+    navigate('/login')
+  }
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
@@ -32,7 +37,7 @@ function App() {
 
   return (
     <>
-        <Navbar userData={UserData} />
+        <Navbar LogOut={LogOut} userData={UserData} />
         <div className="container">
         <MoviesContextProvider>
           <Routes>
@@ -45,10 +50,10 @@ function App() {
             <Route path='people' element={<People />} />
 
             <Route path='people/:id' element={<PeopleDetails />} />
-
+          
             <Route path='login' element={<Login GetUserData={GetUserData} />} />
             <Route path='Register' element={<Register />} />
-
+           
           </Routes>
           </MoviesContextProvider>
         </div>

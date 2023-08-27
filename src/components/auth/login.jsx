@@ -37,11 +37,15 @@ export default function Login(props) {
       setErrorList(ValidationResult.error.details)
       setLoading(false)
     } else {
-      let response = await Axios.post(`http://209.126.85.136/tableers/api/Auth/Login`, user)
+      let response = await Axios.post(`http://209.126.85.136/tableers/api/Auth/Login`, user,{
+        headers:{
+          "Accept-Language":"en-us"
+        }
+      })
       console.log("response = ", response);
 
-      if (response.status) {
-        // localStorage.setItem("token", response.token)
+      if (response.status == 200) {
+        localStorage.setItem("token", response.data.obj.token)
         navigate('/home')
         setLoading(false)
         props.GetUserData()

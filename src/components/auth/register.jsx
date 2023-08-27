@@ -38,7 +38,11 @@ export default function Register() {
     if (ValidationResult.error) {
       setErrorList(ValidationResult.error.details)
     } else {
-      let response = await Axios.post(`http://209.126.85.136/tableers/api/Auth/Register`, user)
+      let response = await Axios.post(`http://209.126.85.136/tableers/api/Auth/Register`, user,{
+        headers:{
+          "Accept-Language":"en-us"
+        }
+      })
       console.log(response.status);
       if (response.status) {
 

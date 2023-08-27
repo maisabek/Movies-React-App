@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export default function navbar() {
+export default function navbar(props) {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark">
             <div className="container-fluid">
@@ -13,15 +13,15 @@ export default function navbar() {
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
                             <Link className="nav-link active" aria-current="page"
-                             to="home">Home</Link>
+                                to="home">Home</Link>
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" to="movies">Movies</Link>
                         </li>
-                     
+
                         <li className="nav-item">
                             <Link className="nav-link" aria-current="page"
-                             to="tv">Tv</Link>
+                                to="tv">Tv</Link>
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" to="People">People</Link>
@@ -30,19 +30,26 @@ export default function navbar() {
 
 
                     <ul className="navbar-nav  mb-2 mb-lg-0">
-                        <li className="nav-item">
-                            <Link className="nav-link" 
-                             to="Login">Login</Link>
+                        {
+                            props.userData ? 
+                            <li className="nav-item" style={{ cursor:'pointer'}}>
+                            <span className="nav-link" 
+                            onClick={props.LogOut}>LogOut</span>
                         </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="register">Register</Link>
-                        </li>
-                  
-                        <li className="nav-item">
-                            <span className="nav-link">LogOut</span>
-                        </li>
+                                :
+                                <>
+                                <li className="nav-item">
+                                    <Link className="nav-link"
+                                        to="login">Login</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="register">Register</Link>
+                                </li>
+                            </>
+                        }
+                     
                     </ul>
-                  
+
                 </div>
             </div>
         </nav>
